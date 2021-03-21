@@ -1,35 +1,24 @@
 pipeline {
   
-  agent any
+  agent {
+    docker { 
+      image 'maven:3.3.3'
+    }
+  }
   
-  stages {
+    stages {
   
     stage("build") {
       steps {
         echo 'building the application...'
-        def mavenBuildContainer = docker.image('maven')
-        mavenBuildContainer.pull()
-        mavenBuildContainer.inside {
-          sh 'mvn -B -DskipTests clean package'
+        sh 'mvn -B -DskipTests clean package'
         }
       } 
-    }
     
     stage("test") {
       steps {
         echo 'testing the application...'
-        def mavenTestContainer = docker.image('maven')
-        mavenTestContainer.pull()
-        mavenTestContainer.inside {
-          sh 'mvn test'
+        sh 'mvn test'
         }
       }
-    }
-    
-    stage("deploy") {
-      steps {
-        echo 'deploying the application...'
-      }
-    }
-  }
 }
