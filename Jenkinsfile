@@ -2,23 +2,27 @@ pipeline {
   
   agent any
   
-  tools {
-    maven 'Maven'
-  }
-  
   stages {
   
     stage("build") {
       steps {
         echo 'building the application...'
-        sh 'mvn -B -DskipTests clean package'
+        def mavenBuildContainer = docker.image('maven')
+        mavenBuildContainer.pull()
+        mavenBuildContainer.inside {
+          sh 'mvn -B -DskipTests clean package'
+        }
       } 
     }
     
     stage("test") {
       steps {
         echo 'testing the application...'
-        sh 'mvn test'
+        def mavenTestContainer = docker.image('maven')
+        mavenTestContainer.pull()
+        mavenTestContainer.inside {
+          sh 'mvn test'
+        }
       }
     }
     
