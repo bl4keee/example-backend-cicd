@@ -12,7 +12,15 @@ pipeline {
       steps {
         echo 'building the application...'
         sh 'mvn -B -DskipTests clean package'
-      } 
+      }
+      post {
+        success {
+          slackSend color: "good", message: "Message from Jenkins Pipeline"
+        }
+        failure {
+          slackSend color: "red", message: "Message from Jenkins Pipeline"
+        }
+      }
     }
     
     stage("test") {
@@ -28,15 +36,4 @@ pipeline {
       }
     } 
   }
-  
-  post {
-    
-    success {
-      slackSend color: "good", message: "Message from Jenkins Pipeline"
-    }
-    
-    failure {
-      slackSend color: "red", message: "Message from Jenkins Pipeline"
-    }
-}
 }
