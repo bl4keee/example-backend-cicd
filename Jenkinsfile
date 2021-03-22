@@ -39,3 +39,4 @@ pipeline {
       slackSend color: "red", message: "Message from Jenkins Pipeline"
     }
 }
+}
