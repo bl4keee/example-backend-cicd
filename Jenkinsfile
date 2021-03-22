@@ -15,10 +15,14 @@ pipeline {
       }
       post {
         success {
-          slackSend color: "good", message: "Message from Jenkins Pipeline"
+          wrap([$class: 'BuildUser']) {
+            slackSend color: "good", message: 'Build started by "${BUILD_USER}" was successful!'
+          }
         }
         failure {
-          slackSend color: "red", message: "Message from Jenkins Pipeline"
+          wrap([$class: 'BuildUser']) {
+            slackSend color: "red", message: 'Build started by "${BUILD_USER}" failed!!'
+          }
         }
       }
     }
