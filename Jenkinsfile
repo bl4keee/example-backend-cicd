@@ -10,9 +10,9 @@ pipeline {
   
     stage("build") {
       steps {
-         echo 'building the application...'
-         sh 'mvn -B -DskipTests clean package'
-        def specificCause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')
+        script {wrap([$class: 'BuildUser']) {sh 'echo "${BUILD_USER}"'}}
+          echo 'building the application...'
+          sh 'mvn -B -DskipTests clean package'
       }
       post {
         success {
