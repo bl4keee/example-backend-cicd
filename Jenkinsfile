@@ -10,18 +10,16 @@ pipeline {
   
     stage("build") {
       steps {
-        wrap([$class: 'BuildUser']) {
-          def user = env.BUILD_USER_ID
-          echo 'building the application...'
-          sh 'mvn -B -DskipTests clean package'
-        }
+         echo 'building the application...'
+         sh 'mvn -B -DskipTests clean package'
+        def specificCause = currentBuild.getBuildCauses('hudson.model.Cause$UserIdCause')
       }
       post {
         success {
-           slackSend color: "good", message: 'Build started by ${user} was successful!'
+           slackSend color: "good", message: 'Build started by ${specificCause} was successful!'
         }
         failure {
-           slackSend color: "red", message: 'Build started by ${user} failed!!'
+           slackSend color: "red", message: 'Build started by ${specificCause} failed!!'
         }
       }
     }
