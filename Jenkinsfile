@@ -10,10 +10,10 @@ pipeline {
   
     stage("build") {
       steps {
-        script {wrap([$class: 'BuildUser']) {sh 'echo "${BUILD_USER}"'}}
-          echo 'building the application...'
-          sh 'mvn -B -DskipTests clean package'
+         echo 'building the application...'
+         sh 'mvn -B -DskipTests clean package'
       }
+      
       post {
         success {
            slackSend color: "good", message: 'Build started by ${specificCause} was successful!'
