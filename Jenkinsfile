@@ -10,19 +10,18 @@ pipeline {
   
     stage("build") {
       steps {
-        echo 'building the application...'
-        sh 'mvn -B -DskipTests clean package'
+        wrap([$class: 'BuildUser']) {
+          def user = env.BUILD_USER_ID
+          echo 'building the application...'
+          sh 'mvn -B -DskipTests clean package'
+        }
       }
       post {
         success {
-          wrap([$class: 'BuildUser']) {
-            slackSend color: "good", message: 'Build started by "${BUILD_USER}" was successful!'
-          }
+           slackSend color: "good", message: 'Build started by ${user} was successful!'
         }
         failure {
-          wrap([$class: 'BuildUser']) {
-            slackSend color: "red", message: 'Build started by "${BUILD_USER}" failed!!'
-          }
+           slackSend color: "red", message: 'Build started by ${user} failed!!'
         }
       }
     }
