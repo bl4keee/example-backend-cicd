@@ -1,7 +1,7 @@
 pipeline {
   
   agent any
-  
+    
   tools {
     maven 'Maven'
   }
@@ -16,10 +16,10 @@ pipeline {
       
       post {
         success {
-           slackSend color: "good", message: 'Build started by ${specificCause} was successful!'
+           slackSend color: "good", message: 'Build successful on branch - ' + "${env.BRANCH_NAME}" + '\nStarted by:' + "${env.CHANGE_AUTHOR}" + '\nCheck this build: ' + "${env.BUILD_URL}"
         }
         failure {
-           slackSend color: "red", message: 'Build started by ${specificCause} failed!!'
+           slackSend color: "red", mmessage: 'Build failure on branch - ' + "${env.BRANCH_NAME}" + '\nStarted by:' + "${env.CHANGE_AUTHOR}" + '\nCheck this build: ' + "${env.BUILD_URL}"
         }
       }
     }
