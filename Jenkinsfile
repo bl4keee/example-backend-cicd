@@ -19,7 +19,7 @@ pipeline {
            slackSend color: "good", message: 'Build successful on branch - ' + "${env.BRANCH_NAME}" + '\nStarted by:' + "${env.CHANGE_AUTHOR}" + '\nCheck this build: ' + "${env.BUILD_URL}"
         }
         failure {
-           slackSend color: "red", mmessage: 'Build failure on branch - ' + "${env.BRANCH_NAME}" + '\nStarted by:' + "${env.CHANGE_AUTHOR}" + '\nCheck this build: ' + "${env.BUILD_URL}"
+           slackSend color: "red", message: 'Build failure on branch - ' + "${env.BRANCH_NAME}" + '\nStarted by:' + "${env.CHANGE_AUTHOR}" + '\nCheck this build: ' + "${env.BUILD_URL}"
         }
       }
     }
