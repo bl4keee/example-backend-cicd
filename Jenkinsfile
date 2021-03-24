@@ -16,10 +16,10 @@ pipeline {
       
       post {
         success {
-           slackSend color: "good", message: 'Build successful on branch - ' + "${GIT_BRANCH}" + '\nStarted by:' + "${env.CHANGE_AUTHOR}" + '\nCheck this build: ' + "${env.BUILD_URL}"
+           slackSend color: "good", message: 'Build successful on branch - ' + "${GIT_BRANCH}" + '\nStarted by:' + "${env.CHANGE_AUTHOR}" + '\nTriggered by commit: ' + "${GIT_COMMIT.substring(0,6)}"
         }
         failure {
-           slackSend color: "red", message: 'Build failure on branch - ' + "${GIT_BRANCH}" + '\nStarted by:' + "${env.CHANGE_AUTHOR}" + '\nCheck this build: ' + "${env.BUILD_URL}"
+           slackSend color: "red", message: 'Build failure on branch - ' + "${GIT_BRANCH}" + '\nStarted by:' + "${env.CHANGE_AUTHOR}" + '\nTriggered by commit: ' + "${GIT_COMMIT.substring(0,6)}"
         }
       }
     }
