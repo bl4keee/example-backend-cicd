@@ -32,9 +32,9 @@ services:
     networks:
       - jenkins
     environment:
-      sonar.jdbc.url=jdbc:postgresql://db:5432/sonar
-      sonar.jdbc.username=sonar
-      sonar.jdbc.password=sonar
+      - sonar.jdbc.url=jdbc:postgresql://db:5432/sonar
+      - sonar.jdbc.username=sonar
+      - sonar.jdbc.password=sonar
     depends_on: 
       - postgres
 
