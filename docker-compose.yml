@@ -23,6 +23,8 @@ services:
       - postgresql_data:/var/lib/postgresql/data
   sonarqube:
     image: sonarqube:lts
+    expose:
+      - 9000
     ports:
       - "9000:9000"
       - "9092:9092"
