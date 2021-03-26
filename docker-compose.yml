@@ -31,7 +31,7 @@ services:
       - "127.0.0.1:9000:9000"
     networks:
       - jenkins
-     environment:
+    environment:
       - sonar.jdbc.url=jdbc:postgresql://db:5432/sonar
       - sonar.jdbc.username=sonar
       - sonar.jdbc.password=sonar
