@@ -24,7 +24,7 @@ services:
       - postgresql_data:/var/lib/postgresql/data
       
   sonarqube:
-    image: sonarqube:7.6-community 
+    image: sonarqube:lts
     volumes:
       - sonarqube_conf:/opt/sonarqube/conf
       - sonarqube_data:/opt/sonarqube/data
