@@ -40,6 +40,19 @@ pipeline {
       }
     }
     
+    stage('Sonarqube analysis') {
+        
+        environment {
+            scannerHome = tool 'sonar'
+        }
+        
+        steps {
+            withSonarQubeEnv('sonarqube') {
+                sh 'mvn clean package sonar:sonar'
+            }
+        }
+    }
+    
     stage("deploy") {
       steps {
         echo 'deploying the application...'
