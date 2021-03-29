@@ -1,7 +1,7 @@
 pipeline {
   
   agent any
-  
+    
   tools {
     maven 'Maven'
   }
@@ -10,9 +10,18 @@ pipeline {
   
     stage("build") {
       steps {
-        echo 'building the application...'
-        sh 'mvn -B -DskipTests clean package'
-      } 
+         echo 'building the application...'
+         sh 'mvn -B -DskipTests clean package'
+      }
+      
+      post {
+        success {
+           slackSend color: "good", message: 'Build successful on branch - ' + "${GIT_BRANCH}" + '\nStarted by:' + "${env.CHANGE_AUTHOR}" + '\nCheck this build: ' + "${env.BUILD_URL}"
+        }
+        failure {
+           slackSend color: "red", message: 'Build failure on branch - ' + "${GIT_BRANCH}" + '\nStarted by:' + "${env.CHANGE_AUTHOR}" + '\nCheck this build: ' + "${env.BUILD_URL}"
+        }
+      }
     }
     
     stage("test") {
@@ -26,6 +35,6 @@ pipeline {
       steps {
         echo 'deploying the application...'
       }
-    }
+    } 
   }
 }
