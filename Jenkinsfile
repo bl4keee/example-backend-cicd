@@ -56,6 +56,7 @@ pipeline {
     stage("deploy") {
       steps {
         echo 'deploying the application...'
+        sh 'mvn clean deploy:heroku'
       }
     } 
   }
